@@ -470,15 +470,18 @@ $scope.hasNoUserPic = function(like){
 };
 // $scope.like
 $scope.goLoginPerson = function(like){
+  // alert(like.username);
+  // alert($scope.singlePerson.username);
   if(like.username!=$scope.singlePerson.username){
-    $http.post('http://stark-eyrie-6720.herokuapp.com/getUser23',
-          {testInfo: 'testInfo recieved'}).error(function(){
+    $http.post('http://stark-eyrie-6720.herokuapp.com/getUser22',
+          {username: like.username}).error(function(){
             navigator.notification.alert(
             'Connection not available.',  // message
             null,         // callback
             "Couldn't display user."                 // buttonName
           )
           }).then(function (res2) {
+            // alert(res2.data.user.username);
 
 
           // alert(res1.data.watchList.listName);
@@ -502,8 +505,13 @@ $scope.goLoginPerson = function(like){
            // alert()
           }).then(function(){
             $state.go('app.loginPerson');
+             setTimeout(function() {
+               $ionicScrollDelegate.scrollTop();
+            }, 200);
+             PetService.setProfileView2(true);
           });
   }else{
+    // alert('here');
     $state.go('app.loginPerson');
   }
 
@@ -546,6 +554,11 @@ $scope.goShopPerson = function(like){
            // alert()
           }).then(function(){
             $state.go('app.shopPerson');
+             setTimeout(function() {
+               $ionicScrollDelegate.scrollTop();
+            }, 200);
+              PetService.setProfileView3(true);
+               //scroll up here, start toggle over here
           });
   }else{
     $state.go('app.shopPerson');
@@ -589,6 +602,11 @@ $scope.goProfilePerson = function(like){
            // alert()
           }).then(function(){
             $state.go('app.profilePerson');
+              setTimeout(function() {
+               $ionicScrollDelegate.scrollTop();
+            }, 200);
+              PetService.setProfileView4(true);
+                //scroll up here, start toggle over here
           });
   }else{
     $state.go('app.profilePerson');
@@ -1047,6 +1065,10 @@ $scope.toggle4=PetService.getProfileView4();
     // $scope.user = PetService.getUser();
 
     $scope.loadLimit=20;
+
+//     $timeout(function(){
+//   $ionicScrollDelegate.scrollTop();
+// },50)
 
 
 
