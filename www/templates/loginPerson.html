@@ -14,12 +14,20 @@
         <h2 class="profileUsername">@{{singlePerson.username}}</h2>
 
         <div class="profileBtns">
-          <div ng-show="toggle==true" class="profBtn1 leftTog">{{singlePerson.likes.length}} likes</div>
-            <div ng-show="toggle==true" ng-click="toggleProf()" class="profBtn2 rightTog">{{singlePerson.collections.length}} collections
+             <div ng-show="toggle2==true&&singlePerson.likes.length!=1" class="profBtn1 leftTog">{{singlePerson.likes.length}} likes</div>
+            <div ng-show="toggle2==true&&singlePerson.likes.length==1" class="profBtn1 leftTog">{{singlePerson.likes.length}} like</div>
+            <div ng-show="toggle2==true&&singlePerson.collections.length!=1" ng-click="toggleProf2()" class="profBtn2 rightTog">{{singlePerson.collections.length}} collections
+            </div>
+            <div ng-show="toggle2==true&&singlePerson.collections.length==1" ng-click="toggleProf2()" class="profBtn2 rightTog">{{singlePerson.collections.length}} collection
             </div>
 
-             <div ng-show="toggle==false" ng-click="toggleProf()" class="profBtn2 leftTog">{{singlePerson.likes.length}} likes</div>
-           <div ng-show="toggle==false"  class="profBtn1 rightTog">{{singlePerson.collections.length}} collections
+
+             <div ng-show="toggle2==false&&singlePerson.collections.length!=1" ng-click="toggleProf2()" class="profBtn2 leftTog">{{singlePerson.likes.length}} likes</div>
+
+             <div ng-show="toggle2==false&&singlePerson.collections.length==1" ng-click="toggleProf2()" class="profBtn2 leftTog">{{singlePerson.likes.length}} like</div>
+           <div ng-show="toggle2==false&&singlePerson.collections.length!=1"  class="profBtn1 rightTog">{{singlePerson.collections.length}} collections
+           </div>
+           <div ng-show="toggle2==false&&singlePerson.collections.length==1"  class="profBtn1 rightTog">{{singlePerson.collections.length}} collection
            </div>
 
          </div>
@@ -32,7 +40,7 @@
   <!-- <hr class="div12"> -->
 
 <!-- data = data.substr(0, 4) + " " + data.substr(4, 6) -->
-  <div ng-show="toggle==true" class="eventScroller" ng-repeat="watch in singlePerson.likes.slice().reverse()" ng-click="go_here2(watch)" >
+  <div ng-show="toggle2==true" class="eventScroller" ng-repeat="watch in singlePerson.likes.slice().reverse()" ng-click="go_here2(watch)" >
 
     <div class="front">
     <img class="full-image" src="{{watch.watchPhoto}}">
@@ -66,7 +74,7 @@
   </div>
 
 </div>
-<div ng-show="toggle==false">
+<div ng-show="toggle2==false">
   <h1>collections</h1>
 </div>
 </div>

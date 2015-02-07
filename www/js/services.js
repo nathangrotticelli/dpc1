@@ -104,6 +104,9 @@ angular.module('sociogram.services', [])
   var newUser = "no";
   var newNot = false;
  var profileView = true;
+ var profileView2 = true;
+ var profileView3 = true;
+ var profileView4 = true;
   var singleView = false;
  var startCard = true;
  var userPic = "";
@@ -274,6 +277,24 @@ angular.module('sociogram.services', [])
             },
             getProfileView: function () {
                 return profileView;
+            },
+             setProfileView2: function(value) {
+                profileView2 = value;
+            },
+            getProfileView2: function () {
+                return profileView2;
+            },
+             setProfileView3: function(value) {
+                profileView3 = value;
+            },
+            getProfileView3: function () {
+                return profileView3;
+            },
+             setProfileView4: function(value) {
+                profileView4 = value;
+            },
+            getProfileView4: function () {
+                return profileView4;
             },
              setSingleView: function(value) {
                 singleView = value;

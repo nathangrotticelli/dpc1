@@ -16,12 +16,20 @@
         <h2 class="profileUsername">@{{user.username}}</h2>
 
         <div class="profileBtns">
-          <div ng-show="toggle==true" class="profBtn1 leftTog">{{user.likes.length}} likes</div>
-            <div ng-show="toggle==true" ng-click="toggleProf()" class="profBtn2 rightTog">{{user.collections.length}} collections
+          <div ng-show="toggle==true&&user.likes.length!=1" class="profBtn1 leftTog">{{user.likes.length}} likes</div>
+            <div ng-show="toggle==true&&user.likes.length==1" class="profBtn1 leftTog">{{user.likes.length}} like</div>
+            <div ng-show="toggle==true&&user.collections.length!=1" ng-click="toggleProf()" class="profBtn2 rightTog">{{user.collections.length}} collections
+            </div>
+            <div ng-show="toggle==true&&user.collections.length==1" ng-click="toggleProf()" class="profBtn2 rightTog">{{user.collections.length}} collection
             </div>
 
-             <div ng-show="toggle==false" ng-click="toggleProf()" class="profBtn2 leftTog">{{user.likes.length}} likes</div>
-           <div ng-show="toggle==false"  class="profBtn1 rightTog">{{user.collections.length}} collections
+
+             <div ng-show="toggle==false&&user.collections.length!=1" ng-click="toggleProf()" class="profBtn2 leftTog">{{user.likes.length}} likes</div>
+
+             <div ng-show="toggle==false&&user.collections.length==1" ng-click="toggleProf()" class="profBtn2 leftTog">{{user.likes.length}} like</div>
+           <div ng-show="toggle==false&&user.collections.length!=1"  class="profBtn1 rightTog">{{user.collections.length}} collections
+           </div>
+           <div ng-show="toggle==false&&user.collections.length==1"  class="profBtn1 rightTog">{{user.collections.length}} collection
            </div>
 
          </div>

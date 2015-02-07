@@ -470,7 +470,7 @@ $scope.hasNoUserPic = function(like){
 };
 // $scope.like
 $scope.goLoginPerson = function(like){
-  if(like.username!=PetService.getSinglePerson().username){
+  if(like.username!=$scope.singlePerson.username){
     $http.post('http://stark-eyrie-6720.herokuapp.com/getUser23',
           {testInfo: 'testInfo recieved'}).error(function(){
             navigator.notification.alert(
@@ -502,6 +502,7 @@ $scope.goLoginPerson = function(like){
            // alert()
           }).then(function(){
             $state.go('app.loginPerson');
+             //scroll up here, start toggle over here
           });
   }else{
     $state.go('app.loginPerson');
@@ -513,7 +514,7 @@ $scope.goLoginPerson = function(like){
 };
 
 $scope.goShopPerson = function(like){
-  if(like.username!=PetService.getSingleShopPerson().username){
+  if(like.username!=$scope.singleShopPerson.username){
     $http.post('http://stark-eyrie-6720.herokuapp.com/getUser23',
           {testInfo: 'testInfo recieved'}).error(function(){
             navigator.notification.alert(
@@ -522,7 +523,7 @@ $scope.goShopPerson = function(like){
             "Couldn't display user."                 // buttonName
           )
           }).then(function (res2) {
-            alert(res2);
+            // alert(res2);
 
 
           // alert(res1.data.watchList.listName);
@@ -546,6 +547,7 @@ $scope.goShopPerson = function(like){
            // alert()
           }).then(function(){
             $state.go('app.shopPerson');
+               //scroll up here, start toggle over here
           });
   }else{
     $state.go('app.shopPerson');
@@ -556,7 +558,51 @@ $scope.goShopPerson = function(like){
   // alert(like);
 };
 
-$scope.goCat = function(link,catName,catTag){
+$scope.goProfilePerson = function(like){
+  if(like.username!=$scope.singleProfilePerson.username){
+    $http.post('http://stark-eyrie-6720.herokuapp.com/getUser23',
+          {testInfo: 'testInfo recieved'}).error(function(){
+            navigator.notification.alert(
+            'Connection not available.',  // message
+            null,         // callback
+            "Couldn't display user."                 // buttonName
+          )
+          }).then(function (res3) {
+
+
+          // alert(res1.data.watchList.listName);
+
+          // $scope.events2 = res1.data.watchList.watchIndex;
+
+          // var currUser =  res1.data.user;
+          // alert($scope.watchList.length);
+          var watchList = PetService.getWatchList();
+           var answerArray24 = [];
+
+           res3.data.user.likes.forEach(function(entry) {
+              for(y=0;y<watchList.length;y++){
+                if(entry==watchList[y].watchName){
+                  answerArray24.push(watchList[y]);
+                }
+              }
+            })
+           res3.data.user.likes = answerArray24;
+           PetService.setSingleProfilePerson(res3.data.user);
+           // alert()
+          }).then(function(){
+            $state.go('app.profilePerson');
+                //scroll up here, start toggle over here
+          });
+  }else{
+    $state.go('app.profilePerson');
+  }
+
+
+  // $scope.singlePerson = PetService.getSinglePerson();
+  // alert(like);
+};
+
+$scope.goCat = function(catName,catTag){
         // PetService.setShopSingle($scope.watchEx);
          // $scope.main.backBtn = false;
           // $state.go("app.shopDetail");
@@ -602,6 +648,13 @@ $scope.watchCat = function(watch){
       // $state.go('app.eventDetail');
       // $scope.main.backBtn = true;
         // $ionicScrollDelegate.scrollTop(false);
+    };
+        $scope.expandProf2 = function (watch) {
+          // $scope.scroll = $ionicScrollDelegate.getScrollPosition().top;
+      // PetService.setSingle(watch);
+           PetService.setSingleProfile2(watch);
+           $state.go('app.profileDetail2');
+
     };
 
      $scope.refreshWatches = function(){
@@ -950,15 +1003,29 @@ $scope.watchCat = function(watch){
       $location.path('/app/loading');
     };
 
-       $scope.toggleProf = function(){
+      $scope.toggleProf = function(){
       $scope.toggle = !$scope.toggle;
       PetService.setProfileView($scope.toggle);
     };
+     $scope.toggleProf2 = function(){
+      $scope.toggle2 = !$scope.toggle2;
+      PetService.setProfileView2($scope.toggle2);
+    };
+     $scope.toggleProf3 = function(){
+      $scope.toggle3 = !$scope.toggle3;
+      PetService.setProfileView3($scope.toggle3);
+    };
+     $scope.toggleProf4 = function(){
+      $scope.toggle4 = !$scope.toggle4;
+      PetService.setProfileView4($scope.toggle4);
+    };
 
-    setTimeout(function() {
-      navigator.splashscreen.hide();
-    }, 1000);
 
+
+$scope.toggle=PetService.getProfileView();
+$scope.toggle2=PetService.getProfileView2();
+$scope.toggle3=PetService.getProfileView3();
+$scope.toggle4=PetService.getProfileView4();
      $scope.singleWatch = PetService.getSingle();
      $scope.singleWatch2 = PetService.getSingle2();
      $scope.singleShopWatch = PetService.getSingleShop();
@@ -970,12 +1037,14 @@ $scope.watchCat = function(watch){
      $scope.singleProfilePerson = PetService.getSingleProfilePerson();
 
     if(PetService.getWatchList().length==0){
+         setTimeout(function() {
+          navigator.splashscreen.hide();
+        }, 1000);
       $scope.getWatches();
     }
     $scope.watchList = PetService.getWatchList();
     $scope.shopCatList = PetService.getCatList();
     $scope.user = PetService.getUser();
-    $scope.toggle=PetService.getProfileView();
     $scope.catHeader = PetService.getCatHead();
     $scope.catTag = PetService.getCatTag();
     // $scope.user = PetService.getUser();

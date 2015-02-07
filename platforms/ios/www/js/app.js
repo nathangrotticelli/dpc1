@@ -111,6 +111,15 @@ angular.module('sociogram', ['ionic', 'openfb','objectFilters','sociogram.contro
                         }
                       }
                   })
+                            .state('app.profilePerson', {
+                      url: "/profilePerson",
+                      views: {
+                        'profile': {
+                          templateUrl: 'templates/profilePerson.html',
+                          controller: "LoginCtrl"
+                        }
+                      }
+                  })
               .state('app.singleShopCat', {
                       url: "/singleShopCat",
                       views: {
