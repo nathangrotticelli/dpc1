@@ -653,6 +653,35 @@ padding: 0;
   /*font-variant: c*/
   /*padding-bottom: 1%;*/
 }
+.logInPlaceholder{
+  /*padding-top: 15%!important;*/
+  /*padding-bottom: 15%;*/
+}
+.loginPromptLog{
+    /*padding-top:15%;*/
+
+  padding-bottom: 25%;
+ /*bottom: 60px;*/
+}
+.loginPromptClose{
+    /*padding-top:25%;*/
+  padding-bottom: 25%;
+   /*bottom: 60px;*/
+}
+
+.LogInContent{
+  /*text-decoration: underline;*/
+  /*position: absolute;*/
+  margin-top: 22.5%;
+  /*border-top: none!important*/
+  text-align: center!important;
+
+      /*border-left-width: 0;*/
+    /*border-right-width: 0;*/
+  /*margin-left:38%;*/
+  /*font-size: 90px;*/
+  /*color:gray;*/
+}
 .signInContent{
   /*text-decoration: underline;*/
   /*position: absolute;*/
@@ -1605,10 +1634,11 @@ html {
         /*border-bottom: none;*/
 }
 .loginTxt{
-    padding-top:26%;
-    font-size: 18px;
+    padding-top:25%;
+    font-size: 19px;
     color:#141414;
     opacity: .8;
+    height:auto;
       /*font-family: 'Gafata', sans-serif;*/
       /*opacity: .8;*/
     /*position: absolute;*/
@@ -1618,8 +1648,9 @@ html {
 .loginX{
 
     /*margin: auto!important;*/
-    margin-top:95%!important;
-    margin-left: 5%;
+    margin-top:70%!important;
+    /*padding-top:25%;*/
+    /*margin-left: 3%;*/
     text-align: center!important;
     font-size: 105px;
     color:#141414;
@@ -1692,10 +1723,10 @@ html {
   z-index: 999!important;
   /*height:0;*/
   /*width:5%;*/
-  padding-top:25%;
-  padding-bottom: 25%;
+  padding-top:24%;
+  padding-bottom: 24%;
   /*padding-top: 10.5%;*/
-  margin-top:24%;
+  /*margin-top:24%;*/
   /*border-bottom: 1px solid #141414;*/
   /*font-family: 'Gafata', sans-serif;*/
 

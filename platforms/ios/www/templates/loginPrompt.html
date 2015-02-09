@@ -4,8 +4,11 @@
 
 
      <ion-content scrollbar-y="false" scroll="true" padding="false" class="loginBack">
-     <div id='loginPromptContent'>
-     <h1 ng-click="getUser22()" class="loginTxt">LOG IN</h1>
+
+     <div ng-click="logInDimepiece()" class="loginPromptLog">
+     <h1 class="loginTxt">LOG IN</h1>
+      </div>
+
     <div class = "unMenu42 " ng-click="joinDimepiece()">
     <!-- <a id='backBtnId' class="topBtn" ng-href="#/app/login"> -->
 
@@ -13,10 +16,54 @@
   <!--   </a> -->
    </div>
 
-     <h1 class="loginX ion-ios7-close-empty" ng-click="closeMe()">
+   <div class="loginPromptClose" ng-click="closeMe()">
+     <h1 class="loginX ion-ios7-close-empty">
      </h1>
-   </div>
+  </div>
 
+ <script id="login-modal.html" type="text/ng-template">
+
+   <div class="modal">
+
+        <header class="bar bar-header bottomBordAdd" >
+        <div class="topCancel" ng-click="closeSignIn()">
+        <p>Cancel</p>
+        </div>
+          <h1 class="title signUpText">Log In</h1>
+        </header>
+
+        <content has-header="true" padding="true">
+
+        <ion-scroll scrollbar-y="true" class="list LogInContent">
+
+
+            <label class="item-input">
+              <i class="icon ion-person placeholder-icon logInPlaceholder"></i>
+              <input type="text" ng-model="logInUsername" placeholder="Email/Username">
+            </label>
+
+
+            <label class="item item-input">
+              <form ng-submit="logTry(logInUsername,loginPassword)">
+              <i class="icon ion-locked placeholder-icon paddLeft"></i>
+                <input type="password" ng-model="loginPassword" placeholder="Password">
+              </form>
+            </label>
+
+
+          <div class="padding" ng-click="logTry(logInUsername,loginPassword)">
+            <p class="text-center">
+              <a class="createAccount">Log In</a>
+            </p>
+          </div>
+
+           </ion-scroll>
+        </content>
+
+      </div>
+
+
+</script>
 
 
    <script id="my-modal.html" type="text/ng-template">

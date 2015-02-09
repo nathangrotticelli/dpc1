@@ -322,6 +322,9 @@ $scope.closeMe = function(){
   $scope.closeLogin = function() {
     $scope.modal.hide();
   };
+  $scope.closeSignIn = function() {
+    $scope.modal2.hide();
+  };
   //Cleanup the modal when we're done with it!
   $scope.$on('$destroy', function() {
     $scope.modal.remove();
@@ -336,80 +339,88 @@ $scope.closeMe = function(){
   });
 
   $scope.startModal = function(){
-    $ionicModal.fromTemplateUrl('my-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up',
-    focusFirstInput: true
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
+
   };
 
-  $scope.getUser22= function(){
-     $http.post('http://stark-eyrie-6720.herokuapp.com/getUser22',
-          {testInfo: 'testInfo recieved'}).then(function (res1) {
-          // alert(res1.data.watchList.listName);
-
-          // $scope.events2 = res1.data.watchList.watchIndex;
-
-          // var currUser =  res1.data.user;
-          // alert($scope.watchList.length);
+  $scope.logTry= function(username,password){
+    if(!username||!password){
+       navigator.notification.alert(
+            "Account/password can't be blank.",
+            null,         // callback
+            "Couldn't Log In"
+          );
+    }else{
+      $http.post('http://stark-eyrie-6720.herokuapp.com/logInDP',
+        {userInfo:{'password':password,'username':username}}).then(function (res1) {
+       //    alert(res1.data.user);
+       if(res1.data.user == 'false'){
+        navigator.notification.alert(
+          'Your Username/Email and Password combo is incorrect, please check and try again.',  // message
+          null,         // callback
+          "Incorrect Info"                 // buttonName
+        );
+       }
+       else{
           var watchList = PetService.getWatchList();
-           var answerArray22 = [];
+         var answerArray22 = [];
 
-           res1.data.user.likes.forEach(function(entry) {
-              for(y=0;y<watchList.length;y++){
-                if(entry==watchList[y].watchName){
-                  answerArray22.push(watchList[y]);
-                }
+         res1.data.user.likes.forEach(function(entry) {
+            for(y=0;y<watchList.length;y++){
+              if(entry==watchList[y].watchName){
+                answerArray22.push(watchList[y]);
               }
-            })
-
-        //   for(y=0;y<watchList.length;y++){
-        //      for(p=0;p<res1.data.user.likes.length;p++){
-        //   if(res1.data.user.likes[p]==watchList[y].watchName){
-
-        //     // alert(watchList[y].watchName);
-        //     // currUser = PetService.getUser();
-        //     answerArray22.push(watchList[y]);
-        //     res1.data.user.likes = answerArray22.push(watchList[y]);
-        //     // currUser.likes = answerArray;
-        //     PetService.setUser(res1.data.user);
-
-        //   }
+            }
+          })
            res1.data.user.likes = answerArray22;
-           PetService.setUser(res1.data.user);
-          // alert('got user');
-          // $state.go('app.login');
-        // }
-            // alert($scope.watchList[]);
-            // alert($scope.watchList.indexOf(res1.data.user.likes[y]));
-          }).then(function(){
-            $state.go('app.login');
-              // alert('done');
-              // alert(PetService.getUser().likes[0].watchName);
-            });
-          // res1.data.user.likes = answerArray;
-          // res1.data.user.likes = [];
+         PetService.setUser(res1.data.user);
+              $scope.modal2.remove();
+          $state.go('app.login');
 
-          // $scope.watchList = res1.data.watchList.watchesIndex;
-         // alert(res1.data.watchList.watchesIndex);
-       // });
+       }
+      })
+    }
+  };
+
+  $scope.startModal2 = function(){
+
   };
 
   $scope.joinDimepiece = function(){
-    if(!$scope.modal){
-      $scope.startModal();
-    }
-    else{
+    // if($scope.modal){
       $scope.modal.show();
-    }
+    // }
+    // else{
+      // $scope.modal.show();
+    // }
+  };
+    $scope.logInDimepiece = function(){
+    // if(!$scope.modal2){
+      // $scope.startModal2();
+    // }
+    // else{
+      $scope.modal2.show();
+    // }
   };
 
 
 $scope.profPic = PetService.getProfPic();
 // $scope.getUser();
  var uploadRetry = 0;
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up',
+    focusFirstInput: true
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+      $ionicModal.fromTemplateUrl('login-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up',
+    focusFirstInput: true
+    }).then(function(modal) {
+      $scope.modal2 = modal;
+    });
   // alert($scope.profPic.length);
 
 
@@ -490,7 +501,14 @@ $scope.goLoginPerson = function(like){
 
           // var currUser =  res1.data.user;
           // alert($scope.watchList.length);
-          var watchList = PetService.getWatchList();
+          if(res2.data.user=='false'){
+            navigator.notification.alert(
+            'User no longer exists.',  // message
+            null,         // callback
+            null                // buttonName
+          )
+          }else{
+            var watchList = PetService.getWatchList();
            var answerArray23 = [];
 
            res2.data.user.likes.forEach(function(entry) {
@@ -502,14 +520,15 @@ $scope.goLoginPerson = function(like){
             })
            res2.data.user.likes = answerArray23;
            PetService.setSinglePerson(res2.data.user);
-           // alert()
-          }).then(function(){
+            PetService.setProfileView2(true);
             $state.go('app.loginPerson');
              setTimeout(function() {
                $ionicScrollDelegate.scrollTop();
             }, 200);
-             PetService.setProfileView2(true);
-          });
+          }
+
+           // alert()
+          })
   }else{
     // alert('here');
     $state.go('app.loginPerson');
@@ -522,8 +541,8 @@ $scope.goLoginPerson = function(like){
 
 $scope.goShopPerson = function(like){
   if(like.username!=$scope.singleShopPerson.username){
-    $http.post('http://stark-eyrie-6720.herokuapp.com/getUser23',
-          {testInfo: 'testInfo recieved'}).error(function(){
+    $http.post('http://stark-eyrie-6720.herokuapp.com/getUser22',
+          {username: like.username}).error(function(){
             navigator.notification.alert(
             'Connection not available.',  // message
             null,         // callback
@@ -539,6 +558,13 @@ $scope.goShopPerson = function(like){
 
           // var currUser =  res1.data.user;
           // alert($scope.watchList.length);
+          if(res2.data.user=='false'){
+            navigator.notification.alert(
+            'User no longer exists.',  // message
+            null,         // callback
+            null                // buttonName
+          )
+          }else{
           var watchList = PetService.getWatchList();
            var answerArray23 = [];
 
@@ -551,14 +577,14 @@ $scope.goShopPerson = function(like){
             })
            res2.data.user.likes = answerArray23;
            PetService.setSingleShopPerson(res2.data.user);
-           // alert()
-          }).then(function(){
+             PetService.setProfileView3(true);
             $state.go('app.shopPerson');
              setTimeout(function() {
                $ionicScrollDelegate.scrollTop();
             }, 200);
-              PetService.setProfileView3(true);
-               //scroll up here, start toggle over here
+
+           // alert()
+         }
           });
   }else{
     $state.go('app.shopPerson');
@@ -571,8 +597,8 @@ $scope.goShopPerson = function(like){
 
 $scope.goProfilePerson = function(like){
   if(like.username!=$scope.singleProfilePerson.username){
-    $http.post('http://stark-eyrie-6720.herokuapp.com/getUser23',
-          {testInfo: 'testInfo recieved'}).error(function(){
+    $http.post('http://stark-eyrie-6720.herokuapp.com/getUser22',
+            {username: like.username}).error(function(){
             navigator.notification.alert(
             'Connection not available.',  // message
             null,         // callback
@@ -587,7 +613,14 @@ $scope.goProfilePerson = function(like){
 
           // var currUser =  res1.data.user;
           // alert($scope.watchList.length);
-          var watchList = PetService.getWatchList();
+          if(res3.data.user=='false'){
+            navigator.notification.alert(
+            'User no longer exists.',  // message
+            null,         // callback
+            null                // buttonName
+          )
+          }else{
+             var watchList = PetService.getWatchList();
            var answerArray24 = [];
 
            res3.data.user.likes.forEach(function(entry) {
@@ -599,14 +632,15 @@ $scope.goProfilePerson = function(like){
             })
            res3.data.user.likes = answerArray24;
            PetService.setSingleProfilePerson(res3.data.user);
-           // alert()
-          }).then(function(){
-            $state.go('app.profilePerson');
+            PetService.setProfileView4(true);
+           $state.go('app.profilePerson');
               setTimeout(function() {
                $ionicScrollDelegate.scrollTop();
             }, 200);
-              PetService.setProfileView4(true);
-                //scroll up here, start toggle over here
+
+          }
+
+           // alert()
           });
   }else{
     $state.go('app.profilePerson');
