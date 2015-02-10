@@ -2,6 +2,7 @@ angular.module('sociogram.services', [])
 .factory('PetService', function() {
   var events = {};
   var watchList = [];
+  var feed = 'Trending';
         // {
         //     "watchName": "Amazon Product Number 42222",
         //     "watchPhoto": "http://i01.i.aliimg.com/wsphoto/v0/2044502801_1/2014-font-b-Bewell-b-font-Women-Dress-font-b-Watch-b-font-Super-Hot-font.jpg",
@@ -229,6 +230,12 @@ angular.module('sociogram.services', [])
             },
             getProfPic: function(){
               return profilePic;
+            },
+            setFeed: function(value) {
+                feed = value;
+            },
+            getFeed: function(){
+              return feed;
             },
             setBack: function(value) {
                 backBtn = value;

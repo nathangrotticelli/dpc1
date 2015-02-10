@@ -143,7 +143,7 @@ angular.module('sociogram.controllers', ['ionic'])
 
   })
 
-.controller('BackCtrl', function ($scope,$ionicActionSheet, $ionicModal,  $ionicPlatform, $ionicNavBarDelegate, $ionicScrollDelegate, $ionicPopup, $http, $location, $ionicLoading ,OpenFB, $state, $stateParams, PetService) {
+.controller('BackCtrl', function ($scope,$ionicActionSheet, $ionicModal,  $ionicPopover, $ionicPlatform, $ionicNavBarDelegate, $ionicScrollDelegate, $ionicPopup, $http, $location, $ionicLoading ,OpenFB, $state, $stateParams, PetService) {
 
 $scope.getPhotos = function(){
     function onSuccess(base64string) {
@@ -355,9 +355,9 @@ $scope.closeMe = function(){
        //    alert(res1.data.user);
        if(res1.data.user == 'false'){
         navigator.notification.alert(
-          'Your Username/Email and Password combo is incorrect, please check and try again.',  // message
+          null,  // message
           null,         // callback
-          "Incorrect Info"                 // buttonName
+          'Sorry, your username or password was incorrect.'               // buttonName
         );
        }
        else{
@@ -403,6 +403,7 @@ $scope.closeMe = function(){
   };
 
 
+
 $scope.profPic = PetService.getProfPic();
 // $scope.getUser();
  var uploadRetry = 0;
@@ -421,12 +422,17 @@ $scope.profPic = PetService.getProfPic();
     }).then(function(modal) {
       $scope.modal2 = modal;
     });
+
+
+
+
+
   // alert($scope.profPic.length);
 
 
   }) // end of back controller
 
-  .controller('LoginCtrl', function ($scope, $ionicPlatform, $ionicActionSheet, $ionicNavBarDelegate, $ionicScrollDelegate, $ionicPopup, $http, $location, $ionicLoading ,OpenFB, $state, $stateParams, PetService) {
+  .controller('LoginCtrl', function ($scope, $ionicPlatform, $ionicActionSheet, $ionicNavBarDelegate, $ionicScrollDelegate, $ionicPopover, $ionicPopup, $http, $location, $ionicLoading ,OpenFB, $state, $stateParams, PetService) {
     // $scope.main = {};
     // alert(window.StatusBar);
 
@@ -615,9 +621,9 @@ $scope.goProfilePerson = function(like){
           // alert($scope.watchList.length);
           if(res3.data.user=='false'){
             navigator.notification.alert(
-            'User no longer exists.',  // message
+            null,  // message
             null,         // callback
-            null                // buttonName
+            'User no longer exists.'                // buttonName
           )
           }else{
              var watchList = PetService.getWatchList();
@@ -684,7 +690,7 @@ $scope.goCat = function(catName,catTag){
 $scope.watchCat = function(watch){
   return (watch.tags.indexOf($scope.catTag)>-1);
 };
-
+// $scope.true22 = false;
   $scope.expandProf = function (watch) {
           // $scope.scroll = $ionicScrollDelegate.getScrollPosition().top;
       // PetService.setSingle(watch);
@@ -1068,13 +1074,32 @@ $scope.watchCat = function(watch){
       $scope.toggle4 = !$scope.toggle4;
       PetService.setProfileView4($scope.toggle4);
     };
+    $scope.openPopover = function($event) {
+      // alert('here');
+    $scope.popover.show($event);
+  };
+  $scope.closePopover = function() {
+    $scope.popover.hide();
+  };
+     $scope.showSel = function(feed){
+      if($scope.feed!=feed){
+
+               $ionicScrollDelegate.scrollTop();
+
+       $scope.feed = feed;
+       PetService.setFeed(feed);
+      }
+      // setTimeout(function() {
+      //    $scope.openPopover();
+      // }, 100);
+    };
 
 
 
-$scope.toggle=PetService.getProfileView();
-$scope.toggle2=PetService.getProfileView2();
-$scope.toggle3=PetService.getProfileView3();
-$scope.toggle4=PetService.getProfileView4();
+     $scope.toggle=PetService.getProfileView();
+     $scope.toggle2=PetService.getProfileView2();
+     $scope.toggle3=PetService.getProfileView3();
+     $scope.toggle4=PetService.getProfileView4();
      $scope.singleWatch = PetService.getSingle();
      $scope.singleWatch2 = PetService.getSingle2();
      $scope.singleShopWatch = PetService.getSingleShop();
@@ -1091,14 +1116,21 @@ $scope.toggle4=PetService.getProfileView4();
         }, 1000);
       $scope.getWatches();
     }
+    $scope.feed =  PetService.getFeed();
     $scope.watchList = PetService.getWatchList();
     $scope.shopCatList = PetService.getCatList();
     $scope.user = PetService.getUser();
     $scope.catHeader = PetService.getCatHead();
     $scope.catTag = PetService.getCatTag();
-    // $scope.user = PetService.getUser();
-
     $scope.loadLimit=20;
+
+     $ionicPopover.fromTemplateUrl('my-popover.html', {
+    scope: $scope,
+      animation: 'slide-in-up'
+  }).then(function(popover) {
+    $scope.popover = popover;
+
+  });
 
 //     $timeout(function(){
 //   $ionicScrollDelegate.scrollTop();

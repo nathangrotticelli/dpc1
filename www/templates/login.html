@@ -1,5 +1,5 @@
 
-<ion-view hide-back-button="true" hide-nav-bar="false" animation="slide-left-right">
+<ion-view hide-back-button="true" hide-nav-bar="true" animation="slide-left-right">
 <!-- <ion-header-bar align-title="left" class="bar-positive">
   <div class="buttons">
     <button class="button" ng-click="doSomething()">Left Button</button>
@@ -13,19 +13,21 @@
 </ion-header-bar> -->
 
 <div class = "unMenu22 ">
-  <div>Trending<a class="ion-chevron-down streamArrow"></a>
-    <a ng-click="" class="searchIcon ion-ios7-search"></a>
+  <div ng-click="openPopover($event)">{{feed}}
+    <a class="ion-chevron-down streamArrow"></a>
   </div>
+  <a ng-click="" class="searchIcon ion-ios7-search"></a>
   </div>
 
  <ion-content scrollbar-y="true" scroll="true" class="mesh">
+ <br><br><br>
       <!-- </div> -->
      <ion-refresher id="re1" pulling-icon="none" refreshing-icon="ion-ios7-reloading"  on-refresh="refreshWatches()">
   </ion-refresher>
   <!-- <hr class="div12"> -->
 
 <!-- data = data.substr(0, 4) + " " + data.substr(4, 6) -->
-  <div class="eventScroller" ng-repeat="watch in watchList| limitTo: loadLimit"  ng-click="go_here(watch)" >
+  <div class="eventScroller" ng-repeat="watch in watchList | orderObjectBy:feed:true | limitTo: loadLimit "  ng-click="go_here(watch)" >
 
     <div class="front">
     <img class="full-image" src="{{watch.watchPhoto}}">
@@ -84,7 +86,43 @@
 
 
 
+<script id="my-popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content class="popoverBack" >
+<div class="list">
 
+  <label class="item item-radio popBack">
+    <input ng-click="$event.stopPropagation(); showSel('Trending')" type="radio" ng-model="feed" ng-value="'Trending'"  name="group">
+    <div class="item-content whiteTxt">
+      Trending
+    </div>
+    <i class="whiteTxt2 radio-icon ion-checkmark"></i>
+  </label>
+
+    <label class="item item-radio">
+    <input type="radio" ng-model="feed" ng-value="'Most Popular'" ng-click="$event.stopPropagation(); showSel('Most Popular')" name="group">
+    <div class="item-content whiteTxt">
+      Most Popular
+    </div>
+    <i class="whiteTxt2 radio-icon ion-checkmark"></i>
+  </label>
+
+   <label class="item item-radio">
+    <input type="radio" ng-click="$event.stopPropagation(); showSel('Newest Watches')" ng-model="feed" ng-value="'Newest Watches'" name="group">
+    <div class="item-content whiteTxt">
+      Newest Watches
+    </div>
+    <i class="whiteTxt2 radio-icon ion-checkmark"></i>
+  </label>
+
+
+
+
+
+</div>
+    </ion-content>
+  </ion-popover-view>
+</script>
  </ion-content>
 
 

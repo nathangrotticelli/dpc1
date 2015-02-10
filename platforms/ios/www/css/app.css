@@ -502,9 +502,31 @@ background-color: red;
   padding: 5%;
   /*color:white;*/
 }
-.popoverBack{
-  /*background-color: white;*/
+.whiteTxt{
+  color:#fefdfb!important;
+  background-color: #ff6030!important;
+  text-align: center;
+  text-indent: 15%;
+  font-size: 16px;
+  font-weight: bold;
+  line-height:20px;
+  /*padding-top: 3%!important;*/
+  /*padding-bottom: 3%!important;*/
+
 }
+.whiteTxt2{
+  color:#fefdfb!important;
+  padding-right: 9%!important;
+  font-size: 17px!important;
+  /*background-color: black!important;*/
+
+}
+.popoverBack .item{
+  /*border-color: #ecf0f1;*/
+  border:none!important;
+  border-top: .5px solid lightgray!important;
+}
+
 .singleNot{
   padding: 1.5%;
   border: 3px solid #141414;
@@ -1386,6 +1408,7 @@ html {
   /*position: absolute;*/
   /*padding-left: 1%;*/
   padding-left: 1%;
+  z-index: 999;
   /*border: 1px solid black;*/
    /*display: inline;*/
    /*position: absolute;*/
