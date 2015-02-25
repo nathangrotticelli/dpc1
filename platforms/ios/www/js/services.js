@@ -18,7 +18,7 @@ angular.module('sociogram.services', [])
         //     "watchLikes": []
         // }
     // ];
-
+var addCollWatch = {};
   var single = {};
    var single2 = {};
   var singleShop = {};
@@ -236,6 +236,12 @@ angular.module('sociogram.services', [])
             },
             getFeed: function(){
               return feed;
+            },
+                getAddColl: function () {
+                return addCollWatch;
+            },
+            setAddColl: function(watch) {
+                addCollWatch = watch;
             },
             setBack: function(value) {
                 backBtn = value;

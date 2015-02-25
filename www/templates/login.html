@@ -48,7 +48,7 @@
                </i> -->
                <i ng-click="$event.stopPropagation(); addWish(watch);" ng-hide="liked(watch)" class="icon ion-ios7-heart-outline"></i>
                <i ng-click="$event.stopPropagation(); removeWish(watch);" ng-show="liked(watch)" class="icon red ion-ios7-heart"></i>
-               <i ng-click="$event.stopPropagation(); loginPrompt();" class="icon ion-ios7-plus-empty"></i>
+               <i ng-click="$event.stopPropagation(); openAddCollection(watch)" class="icon ion-ios7-plus-empty"></i>
                <i ng-click="$event.stopPropagation(); shareBtn('Check out this watch I found via Dimepiece: http://unightlife.io/app. What do you think?', 'Check This Dimepiece.',watch.watchPhoto, null);" class="icon ion-ios7-upload-outline"></i>
 
               </div>
@@ -114,15 +114,36 @@
     </div>
     <i class="whiteTxt2 radio-icon ion-checkmark"></i>
   </label>
-
-
-
-
-
 </div>
     </ion-content>
   </ion-popover-view>
 </script>
+
+<script id="addCollection.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content class="collectionAddBack" >
+<div class="createColl">
+ Add to Collection
+</div>
+   <img class="createCollPic" src="{{addCollWatch.watchPhoto}}">
+   <br>
+   <a class="createCollBtn">Create new collection</a>
+   <br> <br>
+   <div class="collections" ng-if="user" ng-click="$event.stopPropagation(); addColl(collection,addCollWatch);" ng-repeat="collection in user.collections">
+      <h2 class="collectionName">{{collection.collectionName}}</h2>
+   <h1 ng-if="alreadyCollected(collection,addCollWatch)!=true" class="radioColl icon ion-ios7-circle-outline"></h1>
+    <h1 ng-if="alreadyCollected(collection,addCollWatch)==true"  class="radioColl icon activeTab ion-checkmark-circled"></h1>
+
+   <div class="collectionSection" ng-repeat="watch in collection.watches.slice().reverse() | limitTo: 4 ">
+   <img class="collectionItem" src="{{collectionWatchPic(watch)}}">
+   </div>
+   </div>
+   <br>
+
+    </ion-content>
+  </ion-popover-view>
+</script>
+
  </ion-content>
 
 

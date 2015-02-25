@@ -33,6 +33,8 @@ angular.module('sociogram', ['ionic', 'openfb','objectFilters','sociogram.contro
                 // alert($cordovaStatusBar);
                 // $cordovaStatusBar.style(1);
                 // StatusBar.backgroundColorByName("green");
+                // alert('here');
+
                 StatusBar.overlaysWebView(true);
                 // StatusBar.styleLightContent();
                 StatusBar.styleDefault();

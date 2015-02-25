@@ -343,6 +343,8 @@ $scope.closeMe = function(){
   };
 
   $scope.logTry= function(username,password){
+         username = "ng225";
+     password = "ikh";//change these///////////////////
     if(!username||!password){
        navigator.notification.alert(
             "Account/password can't be blank.",
@@ -1040,6 +1042,122 @@ $scope.watchCat = function(watch){
                     username: $scope.user.username
                   });
     };
+        $scope.addColl= function(collection,watch) {
+       // if($scope.user){
+        // alert('here');
+           // var user = $scope.user;
+           // watch.liked = true;
+           // for(l=0;l<$scope.watchList.length;l++){
+           //    if($scope.watchList[l].watchName==watch.watchName){
+           //      watchLoc = l;
+           //      $scope.watchList[watchLoc].liked =  true;
+           //       if($scope.watchList[watchLoc].watchLikes.length>9){
+           //          $scope.watchList[watchLoc].watchLikes.push({'username': $scope.user.username, 'userPic': ''});
+           //        }else{
+           //          $scope.watchList[watchLoc].watchLikes.push({'username': $scope.user.username, 'userPic': $scope.user.userPic});
+           //          // var user = $scope.user;
+           //        }
+           //    }
+           //  }
+           // var watchLoc = $scope.watchList.indexOf(watch);
+           // collection.selected = true;
+           //push it to the collection locally
+           //store it locally
+           //push it to server
+
+          if($scope.alreadyCollected(collection,watch)!=true){
+                  for(x=0;x<$scope.user.collections.length;x++){
+            if($scope.user.collections[x].collectionName==collection.collectionName){
+              $scope.user.collections[x].watches.push(watch.watchName);
+              PetService.setUser($scope.user);
+            }
+          }
+
+          }else{
+               var x = 0;
+              while(x<$scope.user.collections.length){
+                if($scope.user.collections[x].collectionName == collection.collectionName){
+                  while($scope.user.collections[x].watches.indexOf(watch.watchName)>-1){
+                    $scope.user.collections[x].watches.splice($scope.user.collections[x].watches.indexOf(watch.watchName), 1);
+                    PetService.setUser($scope.user);
+                  }
+                }
+                 x++;
+              }
+          }
+            $http.post('http://stark-eyrie-6720.herokuapp.com/updateCollection',
+                 {
+                    user: $scope.user
+                    // collectionName:collection.collectionName
+                  });
+
+
+              // collection.watches.push(watch.watchName);
+
+
+            // }
+           // }
+
+            // PetService.setUser($scope.user);
+            // PetService.setWatchList($scope.watchList);
+
+              // alert('here2');
+
+              // alert('here3');
+
+
+               // alert('here4');
+              // PetService.setUser($scope.user);
+         // PetService.setWatchList($scope.watchList);
+
+
+       // }
+       // else{
+         // $scope.loginPrompt();
+       // }
+    };
+    $scope.alreadyCollected = function(collection,watch){
+      if(collection.watches.indexOf(watch.watchName)>-1){
+        return true;
+      }
+
+
+    }
+ $scope.removeColl= function(collection,watch) {
+       // if($scope.user){
+        // alert('here');
+           // var user = $scope.user;
+           // watch.liked = true;
+           // for(l=0;l<$scope.watchList.length;l++){
+           //    if($scope.watchList[l].watchName==watch.watchName){
+           //      watchLoc = l;
+           //      $scope.watchList[watchLoc].liked =  true;
+           //       if($scope.watchList[watchLoc].watchLikes.length>9){
+           //          $scope.watchList[watchLoc].watchLikes.push({'username': $scope.user.username, 'userPic': ''});
+           //        }else{
+           //          $scope.watchList[watchLoc].watchLikes.push({'username': $scope.user.username, 'userPic': $scope.user.userPic});
+           //          // var user = $scope.user;
+           //        }
+           //    }
+           //  }
+
+           // var watchLoc = $scope.watchList.indexOf(watch);
+           // collection.selected = false;
+           // for(x=0;x<collection.watches.length;x++){
+            // alert(collection.watches[x])
+            // $scope.user.collections[x].watches.push(watch.watchName);
+              // PetService.setUser($scope.user);
+            // if(collection.watches[x] == watch.watchName){
+
+               $http.post('http://stark-eyrie-6720.herokuapp.com/updateCollection',
+                 {
+                    user: $scope.user
+                    // collectionName:collection.collectionName
+                  });
+
+            // }
+           // }
+         };
 
     //used to throw better looking popup messages to user
     $scope.showAlert = function(message,title) {
@@ -1081,6 +1199,33 @@ $scope.watchCat = function(watch){
   $scope.closePopover = function() {
     $scope.popover.hide();
   };
+    $scope.openAddCollection = function(watch) {
+      if($scope.user){
+        // PetService.setAddColl(watch);
+        $scope.addCollWatch = watch;
+          $ionicPopover.fromTemplateUrl('addCollection.html', {
+            scope: $scope,
+              animation: 'slide-in-up'
+          }).then(function(popover) {
+            $scope.popover2 = popover;
+            $scope.popover2.show();
+          });
+
+
+      }else{
+           $scope.loginPrompt();
+      }
+    // $scope.newNot=false;
+    // PetService.setNewNot(false);
+  };
+
+  $scope.closeAddCollection = function() {
+    $scope.popover2.hide();
+  };
+  //Cleanup the popover when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.popover2.remove();
+  });
      $scope.showSel = function(feed){
       if($scope.feed!=feed){
 
@@ -1092,6 +1237,16 @@ $scope.watchCat = function(watch){
       // setTimeout(function() {
       //    $scope.openPopover();
       // }, 100);
+    };
+    $scope.collectionWatchPic = function(watchName){
+       if($scope.user){
+        for(p=0;p<$scope.watchList.length;p++){
+          // alert($scope.watchList[p].watchName);
+          if($scope.watchList[p].watchName==watchName){
+            return $scope.watchList[p].watchPhoto;
+          }
+        }
+      }
     };
 
 
@@ -1110,6 +1265,7 @@ $scope.watchCat = function(watch){
      $scope.singleShopPerson = PetService.getSingleShopPerson();
      $scope.singleProfilePerson = PetService.getSingleProfilePerson();
 
+
     if(PetService.getWatchList().length==0){
          setTimeout(function() {
           navigator.splashscreen.hide();
@@ -1124,6 +1280,8 @@ $scope.watchCat = function(watch){
     $scope.catTag = PetService.getCatTag();
     $scope.loadLimit=20;
 
+    // $scope.addCollWatch = PetService.getAddColl();
+
      $ionicPopover.fromTemplateUrl('my-popover.html', {
     scope: $scope,
       animation: 'slide-in-up'
@@ -1131,6 +1289,7 @@ $scope.watchCat = function(watch){
     $scope.popover = popover;
 
   });
+
 
 //     $timeout(function(){
 //   $ionicScrollDelegate.scrollTop();
@@ -1666,6 +1825,7 @@ if(card!=undefined){
   $scope.$on('$destroy', function() {
     $scope.popover.remove();
   });
+
 // alert('here3');
   $scope.followNot = function(not){
     var userProfId = $scope.userProfId;
@@ -2630,66 +2790,66 @@ $scope.doAlert = true;
 
   };
 
-  $scope.orderCheck =function(){
-    $http.post('https://api.zinc.io/v0/order',{
-  "client_token": "public",
-  "retailer": "amazon",
-  "products": [{"product_id": "B002CHH8OK", "quantity": 1}],
-  "max_price": 2300,
-  "shipping_address": {
-    "first_name": "Tim",
-    "last_name": "Beaver",
-    "address_line1": "77 Massachusetts Avenue",
-    "address_line2": "",
-    "zip_code": "02139",
-    "city": "Cambridge",
-    "state": "MA",
-    "country": "US",
-    "phone_number": "5551230101"
-  },
-  "is_gift": true,
-  "gift_message": "Here's your package, Tim! Enjoy!",
-  "shipping_method": "cheapest",
-  "payment_method": {
-    "name_on_card": "Ben Bitdiddle",
-    "number": "5555555555554444",
-    "security_code": "123",
-    "expiration_month": 1,
-    "expiration_year": 2015,
-    "use_gift": false
-  },
-  "billing_address": {
-    "first_name": "William",
-    "last_name": "Rogers",
-    "address_line1": "84 Massachusetts Ave",
-    "address_line2": "",
-    "zip_code": "02139",
-    "city": "Cambridge",
-    "state": "MA",
-    "country": "US",
-    "phone_number": "5551234567"
-  },
-  "retailer_credentials": {
-    "email": "timbeaver@gmail.com",
-    "password": "myAmazonPassword"
-  },
-  "webhooks": {
-    "order_placed": "http://mywebsite.com/zinc/order_placed",
-    "order_failed": "http://mywebsite.com/zinc/order_failed",
-    "tracking_obtained": "http://mywebsite.com/zinc/tracking_obtained"
-  },
-  "client_notes": {
-    "our_internal_order_id": "abc123"
-  }
-}).error(function(){
-      alert('error');
-    }).success(function(idc){
-      alert('res');
-      alert(idc);
-      alert(JSON.stringify(idc));
-             })
+//   $scope.orderCheck =function(){
+//     $http.post('https://api.zinc.io/v0/order',{
+//   "client_token": "public",
+//   "retailer": "amazon",
+//   "products": [{"product_id": "B002CHH8OK", "quantity": 1}],
+//   "max_price": 2300,
+//   "shipping_address": {
+//     "first_name": "Tim",
+//     "last_name": "Beaver",
+//     "address_line1": "77 Massachusetts Avenue",
+//     "address_line2": "",
+//     "zip_code": "02139",
+//     "city": "Cambridge",
+//     "state": "MA",
+//     "country": "US",
+//     "phone_number": "5551230101"
+//   },
+//   "is_gift": true,
+//   "gift_message": "Here's your package, Tim! Enjoy!",
+//   "shipping_method": "cheapest",
+//   "payment_method": {
+//     "name_on_card": "Ben Bitdiddle",
+//     "number": "5555555555554444",
+//     "security_code": "123",
+//     "expiration_month": 1,
+//     "expiration_year": 2015,
+//     "use_gift": false
+//   },
+//   "billing_address": {
+//     "first_name": "William",
+//     "last_name": "Rogers",
+//     "address_line1": "84 Massachusetts Ave",
+//     "address_line2": "",
+//     "zip_code": "02139",
+//     "city": "Cambridge",
+//     "state": "MA",
+//     "country": "US",
+//     "phone_number": "5551234567"
+//   },
+//   "retailer_credentials": {
+//     "email": "timbeaver@gmail.com",
+//     "password": "myAmazonPassword"
+//   },
+//   "webhooks": {
+//     "order_placed": "http://mywebsite.com/zinc/order_placed",
+//     "order_failed": "http://mywebsite.com/zinc/order_failed",
+//     "tracking_obtained": "http://mywebsite.com/zinc/tracking_obtained"
+//   },
+//   "client_notes": {
+//     "our_internal_order_id": "abc123"
+//   }
+// }).error(function(){
+//       alert('error');
+//     }).success(function(idc){
+//       alert('res');
+//       alert(idc);
+//       alert(JSON.stringify(idc));
+//              })
 
-  };
+//   };
 
  // $timeout(function() {
 
@@ -2705,11 +2865,11 @@ $scope.doAlert = true;
     analytics.trackView('Event Feed Accessed');
 
 
-    $ionicPopover.fromTemplateUrl('my-popover.html', {
-    scope: $scope,
-    }).then(function(popover) {
-      $scope.popover = popover;
-    });
+    // $ionicPopover.fromTemplateUrl('my-popover.html', {
+    // scope: $scope,
+    // }).then(function(popover) {
+    //   $scope.popover = popover;
+    // });
 
     // $scope.userItem = PetService.getUser();
     // $scope.startCard=PetService.getStart();
