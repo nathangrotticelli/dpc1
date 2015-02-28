@@ -606,6 +606,10 @@ background-color: red;
   /*background-color: gray;*/
 /*  opacity: .7;*/
   -webkit-transition: opacity linear 200ms;
+   /*-webkit-transition: opacity linear 200ms;*/
+  /*-webkit-animation: fadeInto 5s linear;*/
+        -webkit-transition-delay: .24s; /* Safari */
+    transition-delay: .24s;
   /*-webkit-animation: fadeInto 5s linear;*/
 
       opacity: .8;
@@ -630,6 +634,11 @@ background-color: red;
   margin-left: 2.5%;
   /*margin-left: 0%;*/
   margin-right: 8%;
+}
+.collectionItem3{
+  max-height: 125px;
+  margin-bottom: 3%;
+  margin-right: 2%;
 }
 .collectionItem2{
   min-height: 83px;
@@ -1165,7 +1174,7 @@ form{
   /*margin-bottom: %;*/
   /*padding-top: 3%;*/
 /*border-bottom: 1px solid black!important;*/
-/*border-top: 1px solid black!important;;*/
+border-top: 1px solid lightgray!important;
   /*padding-top: 0px!im;*/
   /*padding-bottom: 0px!important;*/
   /*margin-bottom: 0;*/
@@ -1695,8 +1704,8 @@ html {
 /*  opacity: .7;*/
   -webkit-transition: opacity linear 200ms;
   /*-webkit-animation: fadeInto 5s linear;*/
-        -webkit-transition-delay: .25s; /* Safari */
-    transition-delay: .25s;
+        -webkit-transition-delay: .48s; /* Safari */
+    transition-delay: .48s;
       opacity: .8;
 
 }
@@ -1997,8 +2006,8 @@ html {
 /*  opacity: .7;*/
   -webkit-transition: opacity linear 200ms;
   /*-webkit-animation: fadeInto 5s linear;*/
-        -webkit-transition-delay: .25s; /* Safari */
-    transition-delay: .25s;
+        -webkit-transition-delay: .48s; /* Safari */
+    transition-delay: .48s;
       opacity: .8;
       /*background-color: lightgray;*/
 }

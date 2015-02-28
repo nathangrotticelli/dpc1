@@ -77,7 +77,15 @@
 
 </div>
 <div ng-show="toggle==false">
-  <h1>collections</h1>
+   <div class="collections" ng-click="$event.stopPropagation();" ng-repeat="collection in user.collections.slice().reverse()">
+      <h2 class="collectionName">{{collection.collectionName}}</h2>
+   <div class="collectionSection" ng-repeat="watch in collection.watches.slice().reverse() | limitTo: 3 ">
+   <img class="collectionItem3" src="{{collectionWatchPic(watch)}}">
+   </div>
+   <div ng-if="collection.watches.length<1" class="collectionItem2">
+   </div>
+   </div>
+   <div class="bufferColl"></div>
 </div>
 
 
