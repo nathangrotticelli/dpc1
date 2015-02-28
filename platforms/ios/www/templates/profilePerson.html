@@ -63,7 +63,7 @@
                </i> -->
                <i ng-click="$event.stopPropagation(); addWish(watch);" ng-hide="watch.liked" class="icon ion-ios7-heart-outline"></i>
                <i ng-click="$event.stopPropagation(); removeWish(watch);" ng-show="watch.liked" class="icon red ion-ios7-heart"></i>
-               <i ng-click="$event.stopPropagation(); loginPrompt();" class="icon ion-ios7-plus-empty"></i>
+               <i ng-click="$event.stopPropagation(); openAddCollection(watch)" class="icon ion-ios7-plus-empty"></i>
                <i ng-click="$event.stopPropagation(); shareBtn('Check out this watch I found via Dimepiece: http://unightlife.io/app. What do you think?', 'Check This Dimepiece.',watch.watchPhoto, null);" class="icon ion-ios7-upload-outline"></i>
 
               </div>

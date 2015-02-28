@@ -3863,11 +3863,11 @@ a.subdued {
   z-index: 10;
   width: 100%;
   height: 100%;
-  background-color: transparent;
+  /*background-color: transparent;*/
    /*box-shadow:         inset 0 0 20px red!important;*/
 }
   .popover-backdrop.active {
-    background-color:transparent;
+    /*background-color:transparent;*/
 
   }
 
@@ -3878,13 +3878,14 @@ a.subdued {
   border-radius: 0!important;
   /*top: 25%;*/
   left: 0!important;
-  z-index: 10;
+  /*z-index: 999!important;*/
   display: block;
   margin-top: 7px;
   /*margin-left: -110px;*/
-  height: 170px;
+  height: 100%;
   width: 100%;
-  background-color: transparent;
+  /*background-color: transparent;*/
+  overflow: auto;
    /*opacity:.95;*/
   }
 
@@ -3900,7 +3901,8 @@ a.subdued {
   border-radius: 2px; }
 
 .popover .scroll-content {
-  z-index: 1;
+  /*z-index: 1;*/
+    /*z-index: 999!important;*/
   /*margin: 2px 0;*/
 }
 
@@ -3918,13 +3920,14 @@ a.subdued {
 
 .platform-ios .popover {
   top: 12%;
+    z-index: 999!important;
      height: 88%;
   /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.08); */
 }
 .platform-ios .popover, .platform-ios .popover .bar-header {
   /*border-radius: 10px; */
 }
-.platform-ios .popover .scroll-content {
+.platform-ios .popover  .scroll-content  {
 
 
   /*margin: 80px 0;*/

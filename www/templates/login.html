@@ -119,30 +119,7 @@
   </ion-popover-view>
 </script>
 
-<script id="addCollection.html" type="text/ng-template">
-  <ion-popover-view>
-    <ion-content class="collectionAddBack" >
-<div class="createColl">
- Add to Collection
-</div>
-   <img class="createCollPic" src="{{addCollWatch.watchPhoto}}">
-   <br>
-   <a class="createCollBtn">Create new collection</a>
-   <br> <br>
-   <div class="collections" ng-if="user" ng-click="$event.stopPropagation(); addColl(collection,addCollWatch);" ng-repeat="collection in user.collections">
-      <h2 class="collectionName">{{collection.collectionName}}</h2>
-   <h1 ng-if="alreadyCollected(collection,addCollWatch)!=true" class="radioColl icon ion-ios7-circle-outline"></h1>
-    <h1 ng-if="alreadyCollected(collection,addCollWatch)==true"  class="radioColl icon activeTab ion-checkmark-circled"></h1>
 
-   <div class="collectionSection" ng-repeat="watch in collection.watches.slice().reverse() | limitTo: 4 ">
-   <img class="collectionItem" src="{{collectionWatchPic(watch)}}">
-   </div>
-   </div>
-   <br>
-
-    </ion-content>
-  </ion-popover-view>
-</script>
 
  </ion-content>
 

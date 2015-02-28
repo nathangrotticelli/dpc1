@@ -1207,6 +1207,7 @@ $scope.watchCat = function(watch){
             scope: $scope,
               animation: 'slide-in-up'
           }).then(function(popover) {
+            $scope.createNew=false;
             $scope.popover2 = popover;
             $scope.popover2.show();
           });
@@ -1219,12 +1220,30 @@ $scope.watchCat = function(watch){
     // PetService.setNewNot(false);
   };
 
+  $scope.createNewCollection = function(collName,watch){
+    // alert('here');
+    var watchArr = [watch.watchName];
+    $scope.user.collections.push({'collectionName':collName,'watches': watchArr } );
+
+            // $scope.createNew = false;
+                cordova.plugins.Keyboard.close();
+                  $http.post('http://stark-eyrie-6720.herokuapp.com/updateCollection',
+                 {
+                    user: $scope.user
+                    // collectionName:collection.collectionName
+                  });
+            // $scope.thing123();
+  };
+
+
   $scope.closeAddCollection = function() {
     $scope.popover2.hide();
+    // $scope.createNew=false;
   };
   //Cleanup the popover when we're done with it!
   $scope.$on('$destroy', function() {
     $scope.popover2.remove();
+    // $scope.createNew=false;
   });
      $scope.showSel = function(feed){
       if($scope.feed!=feed){
@@ -1248,7 +1267,11 @@ $scope.watchCat = function(watch){
         }
       }
     };
-
+$scope.newCollBtn = function(){
+  $scope.createNew = true;
+  // $scope.shouldBeOpen = true;
+ // $scope.$broadcast("newItemAdded");
+}
 
 
      $scope.toggle=PetService.getProfileView();
@@ -1279,6 +1302,8 @@ $scope.watchCat = function(watch){
     $scope.catHeader = PetService.getCatHead();
     $scope.catTag = PetService.getCatTag();
     $scope.loadLimit=20;
+    $scope.createNew=false;
+    $scope.newCollectionName=null;
 
     // $scope.addCollWatch = PetService.getAddColl();
 
@@ -2956,4 +2981,18 @@ $scope.userPic1 = '';
     //   $scope.countFollowers();
     // }
 
-  });
+  })
+.directive('focusMe', function($timeout) {
+  return {
+    scope: { trigger: '@focusMe' },
+    link: function(scope, element) {
+      scope.$watch('trigger', function(value) {
+        if(value === "true") {
+          $timeout(function() {
+            element[0].focus();
+          });
+        }
+      });
+    }
+  };
+});
