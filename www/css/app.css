@@ -611,10 +611,9 @@ background-color: red;
         -webkit-transition-delay: .24s; /* Safari */
     transition-delay: .24s;
   /*-webkit-animation: fadeInto 5s linear;*/
-
       opacity: .8;
-
 }
+
 .collectionSection{
     /*padding-right:3%;*/
   display: inline;
